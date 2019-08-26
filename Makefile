@@ -7,39 +7,29 @@
 #
 
 #SSLPATH=/usr/local/ssl
-OSSLPATH=/usr
+OSSLPATH=/usr/local/opt/openssl
 OSSLINC=$(OSSLPATH)/include
 
 CC=gcc
 
-# Force 32 bit
-CFLAGS= -DUSEOPENSSL -g -I. -I$(OSSLINC) -Wall -m32
-OSSLLIB=$(OSSLPATH)/lib
-
 # 64 bit if default for compiler setup
-#CFLAGS= -DUSEOPENSSL -g -I. -I$(OSSLINC) -Wall
-#OSSLLIB=$(OSSLPATH)/lib64
+CFLAGS= -DUSEOPENSSL -g -I. -I$(OSSLINC) -Wl
+OSSLLIB=$(OSSLPATH)/lib
 
 
 # This is to link with whatever we have, SSL crypto lib we put in static
 #LIBS=-L$(OSSLLIB) $(OSSLLIB)/libcrypto.a
 LIBS=-L$(OSSLLIB) $(OSSLLIB)/libcrypto.a
-all: chntpw chntpw.static cpnt reged reged.static
+all: chntpw cpnt reged
 
 chntpw: chntpw.o ntreg.o edlib.o
 	$(CC) $(CFLAGS) -o chntpw chntpw.o ntreg.o edlib.o $(LIBS)
-
-chntpw.static: chntpw.o ntreg.o edlib.o
-	$(CC) -static $(CFLAGS) -o chntpw.static chntpw.o ntreg.o edlib.o $(LIBS)
 
 cpnt: cpnt.o
 	$(CC) $(CFLAGS) -o cpnt cpnt.o $(LIBS)
 
 reged: reged.o ntreg.o edlib.o
 	$(CC) $(CFLAGS) -o reged reged.o ntreg.o edlib.o
-
-reged.static: reged.o ntreg.o edlib.o
-	$(CC) -static $(CFLAGS) -o reged.static reged.o ntreg.o edlib.o
 
 
 #ts: ts.o ntreg.o
