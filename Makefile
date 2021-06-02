@@ -7,7 +7,8 @@
 #
 
 #SSLPATH=/usr/local/ssl
-OSSLPATH=/usr/local/opt/openssl
+#OSSLPATH=/usr/local/opt/openssl
+OSSLPATH=/opt/homebrew/Cellar/openssl@1.1/1.1.1k
 OSSLINC=$(OSSLPATH)/include
 
 CC=gcc
